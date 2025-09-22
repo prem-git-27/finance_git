@@ -49,7 +49,7 @@ router.post('/register', async (req, res) => {
 
     if (error) {
       console.error('Database error:', error);
-      return res.status(500).json({ error: 'Failed to create user' });
+      return res.status(500).json({ error: 'Failed to create user: ' + error.message });
     }
 
     // Generate JWT token
@@ -71,7 +71,7 @@ router.post('/register', async (req, res) => {
     });
   } catch (error) {
     console.error('Registration error:', error);
-    res.status(500).json({ error: 'Internal server error' });
+    res.status(500).json({ error: 'Registration failed: ' + error.message });
   }
 });
 

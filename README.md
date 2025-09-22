@@ -1,6 +1,6 @@
 # Finance Management Web Application
 
-A comprehensive finance management application built with React.js frontend and Node.js backend, connected to a PostgreSQL database via Supabase.
+A comprehensive finance management application built with **HTML, CSS, JavaScript, React.js** frontend and **Node.js** backend, connected to a **Supabase PostgreSQL** database.
 
 ## Features
 
@@ -15,6 +15,9 @@ A comprehensive finance management application built with React.js frontend and 
 ## Tech Stack
 
 ### Frontend
+- **HTML5** - Semantic markup structure
+- **CSS3** - Modern styling with Flexbox and Grid
+- **JavaScript (ES6+)** - Interactive functionality
 - **React.js** - Modern UI library
 - **TypeScript** - Type-safe JavaScript
 - **Tailwind CSS** - Utility-first CSS framework
@@ -29,8 +32,8 @@ A comprehensive finance management application built with React.js frontend and 
 - **CORS** - Cross-origin resource sharing
 
 ### Database
-- **PostgreSQL** - Relational database
 - **Supabase** - Backend-as-a-Service platform
+- **PostgreSQL** - Relational database
 - **Row Level Security** - Database-level security policies
 
 ## Getting Started

@@ -9,8 +9,8 @@ interface LoginFormProps {
 export function LoginForm({ onSwitchToRegister }: LoginFormProps) {
   const { login } = useAuth();
   const [formData, setFormData] = useState({
-    email: 'demo@example.com',
-    password: 'password123'
+    email: '',
+    password: ''
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -23,7 +23,7 @@ export function LoginForm({ onSwitchToRegister }: LoginFormProps) {
     try {
       await login(formData.email, formData.password);
     } catch (err) {
-      setError('Invalid email or password');
+      setError(err instanceof Error ? err.message : 'Invalid email or password');
     } finally {
       setLoading(false);
     }
@@ -104,11 +104,6 @@ export function LoginForm({ onSwitchToRegister }: LoginFormProps) {
             </button>
           </div>
 
-          <div className="mt-4 p-3 bg-blue-50 rounded-md">
-            <p className="text-xs text-blue-800">
-              <strong>Demo Account:</strong> Use the pre-filled credentials to login and explore the application.
-            </p>
-          </div>
         </form>
       </div>
     </div>

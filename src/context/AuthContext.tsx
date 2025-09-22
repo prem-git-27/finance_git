@@ -40,7 +40,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       localStorage.setItem('auth_token', response.token);
       localStorage.setItem('user', JSON.stringify(response.user));
     } catch (error) {
-      throw new Error('Login failed');
+      console.error('Login error:', error);
+      throw error;
     }
   };
 
@@ -52,7 +53,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       localStorage.setItem('auth_token', response.token);
       localStorage.setItem('user', JSON.stringify(response.user));
     } catch (error) {
-      throw new Error('Registration failed');
+      console.error('Registration error:', error);
+      throw error;
     }
   };
 
