@@ -26,12 +26,24 @@ const makeRequest = async (url: string, options: RequestInit = {}): Promise<any>
       headers,
     });
 
-    if (!response.ok) {
-      const errorData = await response.json().catch(() => ({ error: 'Network error' }));
-      throw new Error(errorData.error || `HTTP error! status: ${response.status}`);
+    // Handle different response types
+    const contentType = response.headers.get('content-type');
+    let responseData;
+    
+    if (contentType && contentType.includes('application/json')) {
+      responseData = await response.json();
+    } else {
+      responseData = await response.text();
     }
 
-    return response.json();
+    if (!response.ok) {
+      const errorMessage = typeof responseData === 'object' && responseData.error 
+        ? responseData.error 
+        : `HTTP error! status: ${response.status}`;
+      throw new Error(errorMessage);
+    }
+
+    return typeof responseData === 'string' ? { message: responseData } : responseData;
   } catch (error) {
     if (error instanceof Error) {
       throw error;

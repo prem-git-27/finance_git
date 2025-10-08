@@ -34,6 +34,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const login = async (email: string, password: string) => {
     try {
+      setLoading(true);
       const response = await FinanceAPI.login(email, password);
       setUser(response.user);
       setToken(response.token);
@@ -41,12 +42,20 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       localStorage.setItem('user', JSON.stringify(response.user));
     } catch (error) {
       console.error('Login error:', error);
+      // Clear any existing auth data on login failure
+      setUser(null);
+      setToken(null);
+      localStorage.removeItem('auth_token');
+      localStorage.removeItem('user');
       throw error;
+    } finally {
+      setLoading(false);
     }
   };
 
   const register = async (userData: Partial<User> & { password: string }) => {
     try {
+      setLoading(true);
       const response = await FinanceAPI.register(userData);
       setUser(response.user);
       setToken(response.token);
@@ -54,19 +63,30 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       localStorage.setItem('user', JSON.stringify(response.user));
     } catch (error) {
       console.error('Registration error:', error);
+      // Clear any existing auth data on registration failure
+      setUser(null);
+      setToken(null);
+      localStorage.removeItem('auth_token');
+      localStorage.removeItem('user');
       throw error;
+    } finally {
+      setLoading(false);
     }
   };
 
   const logout = async () => {
     try {
+      setLoading(true);
       await FinanceAPI.logout();
+    } catch (error) {
+      console.error('Logout error:', error);
+    } finally {
+      // Always clear auth data on logout, even if API call fails
       setUser(null);
       setToken(null);
       localStorage.removeItem('auth_token');
       localStorage.removeItem('user');
-    } catch (error) {
-      console.error('Logout error:', error);
+      setLoading(false);
     }
   };
 
